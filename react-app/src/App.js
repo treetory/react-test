@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import TOC from './components/TOC';
 import ReadContent from './components/ReadContent';
+import CreateContent from './components/CreateContent';
 import Subject from './components/Subject';
+import Control from './components/Control';
 
 class App extends Component {
   // 생성자
@@ -11,7 +13,7 @@ class App extends Component {
     super(props);
     this.max_content_id = 3;
     this.state = {
-      mode: 'welcome',
+      mode: 'create', // welcome | read | create | update | delete
       selected_content_id:2,
       subject:  { title: 'WEB', sub: 'world wide web' },
       welcome: {title: 'welcome', desc:'Hello, React!!!'},
@@ -26,18 +28,42 @@ class App extends Component {
   // state -> props -> component 로 변화된 값이 전달되도록 한다.
   getContent() {
     var _title, _desc, _article = null;
-    var _idx = this.state.selected_content_id-1;
     if (this.state.mode === 'welcome') {
         _title = this.state.welcome.title;
         _desc = this.state.welcome.desc;
         _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
     } else if (this.state.mode === 'read') {
-        _title = this.state.contents[_idx].title;
-        _desc = this.state.contents[_idx].desc;
-        _article = 
-          <ReadContent 
-            title={this.state.contents[_idx].title} 
-            desc={this.state.contents[_idx].desc}></ReadContent>;
+      var i = 0;
+      while (i < this.state.contents.length) {
+        var data = this.state.contents[i];
+        if (data.id === this.state.selected_content_id) {
+          _title = data.title;
+          _desc = data.desc;
+          break;
+        }
+        i = i + 1;
+      }
+      _article = 
+        <ReadContent 
+          title={_title} 
+          desc={_desc}></ReadContent>;
+    } else if (this.state.mode === 'create') {
+      _article = <CreateContent onSubmit={function(_title, _desc){
+        // add content to this.state.contents
+        this.max_content_id = this.max_content_id + 1;
+        // push 는 원본을 바꾼다. -> push 를 쓰면 shouldComponentUpdate 에서 상태변화를 캐치할 수 없다.
+        //this.state.contents.push({id: this.max_content_id, title: _title, desc: _desc});
+        // concat 은 원본은 그대로, 원본을 복제하여 추가하는 것을 붙인 새로운 배열을 반환한다. 무조건 concat 을 사용해 버릇해라.
+        // this.setState(
+        //   {contents: this.state.contents.concat({id: this.max_content_id, title: _title, desc: _desc})}
+        // );
+        // Array.from, Object.assign 을 이용하면 불변성을 유지하면서 할 수 있다.
+        var newContents = Array.from(this.state.contents);
+        newContents.push({contents: this.state.contents.concat({id: this.max_content_id, title: _title, desc: _desc})});
+        this.setState({
+          contents: newContents
+        });
+      }.bind(this)}></CreateContent>;
     }
     return _article;
   }
@@ -68,11 +94,9 @@ class App extends Component {
           data={this.state.contents}
         >
         </TOC>
-        {/* <Content 
-          title={_title} 
-          desc={_desc}
-        >
-        </Content> */}
+        <Control onChangeMode={function(mode) {
+          this.setState({mode: mode});
+        }.bind(this)}></Control>
         {this.getContent()}
       </div>
     );
