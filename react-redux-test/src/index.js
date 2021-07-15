@@ -11,13 +11,13 @@ import store from './store/store';
 
 ReactDOM.render(
   // 1. Redux 만 쓸 때는 StrictMode 로 App 을 구동해도 됨
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  //   <App />
+  // </React.StrictMode>,
   // 2. React Redux 를 사용할 때는 Provider 로 감싼다. Provider 의 props 로 store 를 전달한다.
-  // <Provider store={store}>
-  //   <App></App>
-  // </Provider>,
+  <Provider store={store}>
+    <App></App>
+  </Provider>,
   document.getElementById('root')
 );
 
