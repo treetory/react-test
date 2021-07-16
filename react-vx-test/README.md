@@ -71,4 +71,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 ### referenced from
-This examples is referenced from [https://vx-demo.vercel.app/chord]
+[https://medium.com/vx-code/getting-started-with-vx-1756bb661410]
