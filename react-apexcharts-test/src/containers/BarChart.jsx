@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Box, Button } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import ChartComponent from "../components/ChartComponent";
 
@@ -97,36 +98,62 @@ const BarChart = (props) => {
   }
 
   const getSeries = (series) => {
-    // var _series = Array.from(series);
-    // _series.map(_s => {
-    //     if (_s.name === 'This week') {
-    //         _s.name = 'Last week';
-    //     } else {
-    //         var _data = [];
-    //         var total =_s.data.length;
-    //         while(total > 0) {
-    //             _data.push(getRandomInt(1, 99));
-    //             --total;
-    //         }
-    //         _s.name = 'This week';
-    //         _s.data = _data;
-    //     }
-    //     return _s;
-    // });
-    // return _series;
+    var _series = Array.from(series);
+    _series.map(_s => {
+        if (_s.name === 'This week') {
+            _s.name = 'Last week';
+        } else {
+            var _data = [];
+            var total =_s.data.length;
+            while(total > 0) {
+                _data.push(getRandomInt(1, 99));
+                --total;
+            }
+            _s.name = 'This week';
+            _s.data = _data;
+        }
+        return _s;
+    });
+    return _series;
   }
 
   return (
       <div>
-        <div>
-          {/* <button onClick={setSeries(getSeries(series))}>REFRESH</button> */}
-        </div>
+        <Box
+          sx={{
+            backgroundColor: 'background.paper',
+            p: 3
+          }}
+        >
+          {/* <button onClick={function(e) {
+            var _series = getSeries(series);
+            setSeries(_series);
+          }}>REFRESH</button> */}
+          <Button
+            color="primary"
+            size="large"
+            sx={{ mr: 3 }}
+            variant="outlined"
+            onClick={function(e) {
+              var _series = getSeries(series);
+              setSeries(_series);
+            }}
+          >
+            REFRESH
+          </Button>
+        </Box>
+        <Box
+          sx={{
+            p: 3
+          }}
+        >
           <ChartComponent
               height={props.height}
               options={chartOptions}
               series={series}
               type={'bar'}
           ></ChartComponent>
+        </Box>
       </div>
   )
 }
