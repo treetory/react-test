@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, Button } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import ChartComponent from "../components/ChartComponent";
+import {getRandomInt} from "../utils/test";
 
 const BarChart = (props) => {
   const theme = useTheme();
@@ -91,12 +92,6 @@ const BarChart = (props) => {
     
   }, []);
   
-  const getRandomInt = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-  }
-
   const getSeries = (series) => {
     var _series = Array.from(series);
     _series.map(_s => {

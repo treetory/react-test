@@ -1,7 +1,6 @@
 import Chart from "react-apexcharts";
 
 const ChartComponent = (props) => {
-    console.warn(props);
     return (
         <div>
             <Chart
