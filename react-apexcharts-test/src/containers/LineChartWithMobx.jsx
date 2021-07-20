@@ -1,19 +1,20 @@
-import { Grid, Typography, Box, Button } from "@material-ui/core";
+import { Grid, Box, Button, Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import ChartComponent from "../components/ChartComponent";
-import {observer} from "mobx-react";
-import store from "../store";
+import {observer} from 'mobx-react';
+import store from '../store';
 
-const BarChart = observer((props) => {
+const LineChartWithMobx = observer((props) => {
   const theme = useTheme();
   const chartOptions = {
-      chart: {
+    chart: {
         background: 'transparent',
+        stacked: false,
         toolbar: {
           show: false
         }
       },
-      colors: ['#4287f5', '#f54284'],
+      colors: ['#1f87e6', '#ff5c7c'],
       dataLabels: {
         enabled: false
       },
@@ -26,59 +27,96 @@ const BarChart = observer((props) => {
         }
       },
       legend: {
+        horizontalAlign: 'right',
         labels: {
           colors: theme.palette.text.secondary
         },
+        position: 'top',
         show: true
       },
-      plotOptions: {
-        bar: {
-          columnWidth: '40%'
-        }
+      markers: {
+        hover: {
+          size: undefined,
+          sizeOffset: 2
+        },
+        radius: 2,
+        shape: 'circle',
+        size: 4,
+        strokeColors: ['#1f87e6', '#27c6db'],
+        strokeWidth: 0
       },
       stroke: {
-        colors: ['transparent'],
-        show: true,
-        width: 2
+        curve: 'smooth',
+        dashArray: [0, 3],
+        lineCap: 'butt',
+        width: 3
       },
       theme: {
         mode: theme.palette.mode
       },
       xaxis: {
         axisBorder: {
-          show: true,
           color: theme.palette.divider
         },
         axisTicks: {
-          show: true,
-          color: theme.palette.divider
+          color: theme.palette.divider,
+          show: true
         },
-        categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        categories: [
+          '01 Jan',
+          '02 Jan',
+          '03 Jan',
+          '04 Jan',
+          '05 Jan',
+          '06 Jan',
+          '07 Jan',
+          '08 Jan',
+          '09 Jan',
+          '10 Jan',
+          '11 Jan',
+          '12 Jan'
+        ],
         labels: {
           style: {
             colors: theme.palette.text.secondary
           }
         }
       },
-      yaxis: {
-        axisBorder: {
-          color: theme.palette.divider,
-          show: true
-        },
-        axisTicks: {
-          color: theme.palette.divider,
-          show: true
-        },
-        labels: {
-          style: {
-            colors: theme.palette.text.secondary
+      yaxis: [
+        {
+          axisBorder: {
+            color: theme.palette.divider,
+            show: true
+          },
+          axisTicks: {
+            color: theme.palette.divider,
+            show: true
+          },
+          labels: {
+            style: {
+              colors: theme.palette.text.secondary
+            }
           }
+        },
+        {
+          axisTicks: {
+            color: theme.palette.divider,
+            show: true
+          },
+          axisBorder: {
+            color: theme.palette.divider,
+            show: true
+          },
+          labels: {
+            style: {
+              colors: theme.palette.text.secondary
+            }
+          },
+          opposite: true
         }
-      }
+      ]
   };
-
-  const {barChartStore} = store;
-
+  const {lineChartStore} = store;
   return (
       <div>
         <Grid alignItems="center"
@@ -97,7 +135,7 @@ const BarChart = observer((props) => {
                     mt: 3
                   }}
                 >
-                  BarChart (use Mobx)
+                  LineChart (use Mobx)
               </Typography>
             </Box>
           </Grid>
@@ -114,7 +152,7 @@ const BarChart = observer((props) => {
                 sx={{ mr: 3 }}
                 variant="outlined"
                 onClick={function(e) {
-                    barChartStore.getSeries(barChartStore.series);
+                    lineChartStore.getSeries(lineChartStore.series);
                 }}
               >
                 REFRESH
@@ -130,12 +168,12 @@ const BarChart = observer((props) => {
           <ChartComponent
               height={props.height}
               options={chartOptions}
-              series={barChartStore.series}
-              type={'bar'}
+              series={lineChartStore.series}
+              type={'line'}
           ></ChartComponent>
         </Box>
       </div>
   )
 })
 
-export default BarChart;
+export default LineChartWithMobx;

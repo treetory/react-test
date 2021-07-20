@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Button } from "@material-ui/core";
+import { Grid, Box, Button, Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import ChartComponent from "../components/ChartComponent";
 import {getRandomInt} from "../utils/test";
@@ -114,29 +114,52 @@ const BarChart = (props) => {
 
   return (
       <div>
-        <Box
-          sx={{
-            backgroundColor: 'background.paper',
-            p: 3
-          }}
-        >
-          {/* <button onClick={function(e) {
-            var _series = getSeries(series);
-            setSeries(_series);
-          }}>REFRESH</button> */}
-          <Button
-            color="primary"
-            size="large"
-            sx={{ mr: 3 }}
-            variant="outlined"
-            onClick={function(e) {
-              var _series = getSeries(series);
-              setSeries(_series);
+        <Grid alignItems="center"
+              container
+              justifyContent="space-between"
+              spacing={3}
+              item
+              xs={12}>
+          <Grid item spacing={12}>
+            <Box>
+              <Typography
+                  color="textPrimary"
+                  variant="h3"
+                  sx={{
+                    fontWeight: 'fontWeightBold',
+                    mt: 3
+                  }}
+                >
+                  BarChart (use hook)
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box
+            sx={{
+              backgroundColor: 'background.paper',
+              p: 3
             }}
-          >
-            REFRESH
-          </Button>
-        </Box>
+            >
+              {/* <button onClick={function(e) {
+                var _series = getSeries(series);
+                setSeries(_series);
+              }}>REFRESH</button> */}
+              <Button
+                color="primary"
+                size="large"
+                sx={{ mr: 3 }}
+                variant="outlined"
+                onClick={function(e) {
+                  var _series = getSeries(series);
+                  setSeries(_series);
+                }}
+              >
+                REFRESH
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         <Box
           sx={{
             p: 3
