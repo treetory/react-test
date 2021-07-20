@@ -4,6 +4,7 @@ import BarChartWithMobx from './containers/BarChartWithMobx';
 import LineChart from './containers/LineChart';
 import LineChartWithMobx from './containers/LineChartWithMobx';
 import RadialBarChartWithMobx from './containers/RadialBarChartWithMobx';
+import AreaChartWithMobx from './containers/AreaChartWithMobx';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <LineChart height={400}></LineChart>
         <LineChartWithMobx height={400}></LineChartWithMobx>
         <RadialBarChartWithMobx height={300}></RadialBarChartWithMobx>
+        <AreaChartWithMobx height={350}></AreaChartWithMobx>
       </div>
     </div>
   );
