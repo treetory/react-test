@@ -84,10 +84,9 @@ const BarChart = observer((props) => {
         <Grid alignItems="center"
               container
               justifyContent="space-between"
-              spacing={3}
               item
               xs={12}>
-          <Grid item spacing={12}>
+          <Grid item>
             <Box>
               <Typography
                   color="textPrimary"
