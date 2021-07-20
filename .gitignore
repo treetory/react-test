@@ -7,3 +7,9 @@ react-class-vs-function-test/package-lock.json
 react-class-vs-function-test/yarn.lock
 react-redux-test/package-lock.json
 react-redux-test/yarn.lock
+react-apexcharts-test/package-lock.json
+react-apexcharts-test/yarn.lock
+react-mobx-functional-component-test/package-lock.json
+react-mobx-functional-component-test/yarn.lock
+react-vx-test/package-lock.json
+react-vx-test/yarn.lock
