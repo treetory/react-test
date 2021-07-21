@@ -293,42 +293,48 @@ const CommonFeaturesDataGrid = observer((props) => {
       summaryRows           : 전체 데이터 summary row 를 생성
     */
     const gridElement = (
-        <DataGrid
-          rowKeyGetter={commonFeaturesDataGridStore.rowKeyGetter}
-          columns={columns}
-          rows={commonFeaturesDataGridStore.rows}
-          defaultColumnOptions={{
-            sortable: true,
-            resizable: true
-          }}
-          selectedRows={commonFeaturesDataGridStore.selectedRows}
-          onSelectedRowsChange={commonFeaturesDataGridStore.setSelectedRows}
-          onRowsChange={commonFeaturesDataGridStore.setRows}
-          sortColumns={commonFeaturesDataGridStore.sortColumns}
-          onSortColumnsChange={commonFeaturesDataGridStore.setSortColumns}
-          summaryRows={commonFeaturesDataGridStore.summaryRows}
-          className="fill-grid"
-        />
-      );
+      <DataGrid
+        rowKeyGetter={commonFeaturesDataGridStore.rowKeyGetter}
+        columns={columns}
+        rows={commonFeaturesDataGridStore.rows}
+        defaultColumnOptions={{
+          sortable: true,
+          resizable: true
+        }}
+        selectedRows={commonFeaturesDataGridStore.selectedRows}
+        onSelectedRowsChange={commonFeaturesDataGridStore.setSelectedRows}
+        onRowsChange={commonFeaturesDataGridStore.setRows}
+        sortColumns={commonFeaturesDataGridStore.sortColumns}
+        onSortColumnsChange={commonFeaturesDataGridStore.setSortColumns}
+        summaryRows={commonFeaturesDataGridStore.summaryRows}
+        className="fill-grid"
+      />
+    );
 
     return(
         <>
-            <div className={toolbarClassname}>
-                <ExportButton onExport={() => exportToCsv(gridElement, 'CommonFeatures.csv')}>
-                Export to CSV
-                </ExportButton>
-                <ExportButton onExport={() => exportToXlsx(gridElement, 'CommonFeatures.xlsx')}>
-                Export to XSLX
-                </ExportButton>
-                <ExportButton onExport={() => exportToPdf(gridElement, 'CommonFeatures.pdf')}>
-                Export to PDF
-                </ExportButton>
-            </div>
-            {gridElement}
+          <div className={toolbarClassname}>
+              <ExportButton onExport={() => exportToCsv(gridElement, 'CommonFeatures.csv')}>
+              Export to CSV
+              </ExportButton>
+              <ExportButton onExport={() => exportToXlsx(gridElement, 'CommonFeatures.xlsx')}>
+              Export to XSLX
+              </ExportButton>
+              <ExportButton onExport={() => exportToPdf(gridElement, 'CommonFeatures.pdf')}>
+              Export to PDF
+              </ExportButton>
+          </div>
+          {gridElement}
         </>
     )
 });
 
+/*
+  mobx 로 만들고 난 후 부터 안됨
+  -> gridElement 는 잘 넘겨줌
+     renderToStaticMarkup 함수로 마크업도 제대로 생성함
+     단, 파일 저장 다이얼로그가 생성 전에 뜨는 게 문제임
+*/
 const ExportButton = ({onExport, children}) => {
     const [exporting, setExporting] = useState(false);
     return (
