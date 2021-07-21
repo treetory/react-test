@@ -13,3 +13,5 @@ react-mobx-functional-component-test/package-lock.json
 react-mobx-functional-component-test/yarn.lock
 react-vx-test/package-lock.json
 react-vx-test/yarn.lock
+react-data-grid-test/package-lock.json
+react-data-grid-test/yarn.lock
