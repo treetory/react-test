@@ -80,7 +80,7 @@ class CommonFeaturesDataGridStore {
             rows: observable,
             countries: observable,
             // sortColumns: observable,
-            // selectedRows: observable,
+            selectedRows: observable,
             // summaryRow: observable,
             rowKeyGetter: action,
             setSortColumns: action,
