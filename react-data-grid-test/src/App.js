@@ -13,7 +13,14 @@ function App() {
                   p: 3
               }}
           >
-            {/* <GridCard title={'SimpleDataGrid'}></GridCard> */}
+            <GridCard title={'SimpleDataGrid'}></GridCard>
+          </Box>
+          <Box
+              sx={{
+                  backgroundColor: 'background.default',
+                  p: 3
+              }}
+          >
             <GridCard title={'CommonFeaturesDataGrid'}></GridCard>
           </Box>
         </Grid>
