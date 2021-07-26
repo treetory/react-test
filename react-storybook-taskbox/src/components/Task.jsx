@@ -11,6 +11,7 @@ const Task = ({task: {id, title, state}, onArchiveTask, onPinTask}) => {
                     defaultChecked={state === 'TASK_ARCHIVED'}
                     disabled={true}
                     name="checked"
+                    checked={state === 'TASK_ARCHIVED' ? true : false}
                 >
                 </input>
                 <span
