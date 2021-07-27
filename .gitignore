@@ -17,3 +17,6 @@ react-data-grid-test/package-lock.json
 react-data-grid-test/yarn.lock
 react-storybook-taskbox/package-lock.json
 react-storybook-taskbox/yarn.lock
+react-storybook-taskbox/.env
+react-storybook-taskbox/build-storybook.log
+package-lock.json

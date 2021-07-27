@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Task = ({task: {id, title, state}, onArchiveTask, onPinTask}) => {
-    console.warn(id, title, state);
     return (
         <div className={`list-item ${state}`}>
             <label className="checkbox">
