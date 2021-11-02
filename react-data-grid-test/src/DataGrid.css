@@ -1,0 +1,11 @@
+/*
+  이건 데이터 그리드 컬럼 중, 
+  progress dialog 를 보여주는 컬럼의 CSS
+*/
+.dialogContainerClassname {
+    background: rgba(0,0,0,.1);
+    display: flex;
+    inset: 0;
+    place-items: center;
+    position: fixed;
+}
