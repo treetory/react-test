@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import DataGrid, 
 { 
     SelectColumn, 
@@ -10,6 +11,7 @@ import { exportToCsv, exportToXlsx, exportToPdf } from '../utils/ExportUtils';
 import { useState, useMemo } from 'react';
 import { observer } from 'mobx-react';
 import store from '../store';
+import '../DataGrid.css';
 
 /*
   데이터 그리드 컬럼 중, 시간형식으로 된 컬럼의 formatter
@@ -64,7 +66,7 @@ font-size: var(--font-size);
 /*
   이건 데이터 그리드 컬럼 중, 
   progress dialog 를 보여주는 컬럼의 CSS
-*/
+
 const dialogContainerClassname = `
   position: absolute;
   left: 0;
@@ -82,11 +84,11 @@ const dialogContainerClassname = `
     }
 
     > menu {
-      text-align: right;
+      text-align: center;
     }
   }
 `;
-
+*/
 /*
   그리드의 컬럼을 정의한 것 -> 여기선 미리 정의한 게 됨
   컬럼의 속성값이 무엇이 있는지를 알고 쓰면 될 것으로 보임.
@@ -109,7 +111,32 @@ const getColumns = (countries) => {
           name: 'Task',
           width: 120,
           frozen: true,
-          editor: TextEditor,
+          editor({ row, onRowChange, onClose }) {
+            const before = row.title;
+            return createPortal(
+              <div className={'dialogContainerClassname'}>
+                <dialog open>
+                  <textarea
+                    autoFocus
+                    value={row.title}
+                    onChange={(e) => {
+                      onRowChange({ ...row, title: e.target.value})
+                    }}
+                  />
+                  <menu>
+                    <button onClick={() => {
+                      onRowChange({ ...row, title: before});
+                      onClose()
+                    }}>Cancel</button>
+                  </menu>
+                </dialog>
+              </div>,
+              document.getElementsByClassName('MuiCardContent-root')[1]
+            );
+          },
+          editorOptions: {
+            createPortal: true
+          },
           summaryFormatter({ row }) {
             return <>{row.totalCount} records</>;
           }
@@ -171,8 +198,8 @@ const getColumns = (countries) => {
             );
           },
           editor({ row, onRowChange, onClose }) {
-            return (
-              <div className={dialogContainerClassname}>
+            return createPortal(
+              <div className={'dialogContainerClassname'}>
                 <dialog open>
                   <input
                     autoFocus
@@ -187,7 +214,8 @@ const getColumns = (countries) => {
                     <button onClick={() => onClose(true)}>Save</button>
                   </menu>
                 </dialog>
-              </div>
+              </div>,
+              document.getElementsByClassName('MuiCardContent-root')[1]
             );
           },
           editorOptions: {
