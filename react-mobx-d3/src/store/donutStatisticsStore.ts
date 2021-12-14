@@ -18,9 +18,10 @@ export class DonutStatisticsStore {
       setParam: action,
       getLeftDonutData: action,
       addLeftDonutData: action,
+      clearLeftDonutData: action,
       getRightDonutData: action,
       addRightDonutData: action,
-      getDonutData: action
+      reloadDonutData: action,
     });
     this.rootStore = rootStore;
     this.sampleId = -1;
@@ -36,16 +37,7 @@ export class DonutStatisticsStore {
         return this.sampleId > 0;
       },
       () => {
-        // 왼쪽 도넛 차트 데이터 조회
-        getLeftDonutData(this.sampleId).then(data => {
-          if (!data) return;
-          this.addLeftDonutData(data);
-        });
-        // 오른쪽 도넛 차트 데이터 조회
-        getRightDonutData(this.sampleId).then(data => {
-          if (!data) return;
-          this.addRightDonutData(data);
-        });
+        this.reloadDonutData();
       }
     );
   }
@@ -62,16 +54,6 @@ export class DonutStatisticsStore {
   }
 
   /**
-   * LEFT | RIGHT 여부에 따라 DonutChart에 바인딩 될 데이터를 가변적으로 반환
-   * 
-   * @param donutType 
-   * @returns Array<DonutData>
-   */
-  getDonutData(donutType: string) {
-    return donutType === 'LEFT' ? this.getLeftDonutData() : this.getRightDonutData();
-  }
-
-  /**
    * cnt_LEFT 도넛 데이터의 getter / setter
    * 
    * @returns Array<DonutData>
@@ -82,6 +64,10 @@ export class DonutStatisticsStore {
 
   addLeftDonutData(data: DonutData[]) {
     this.cnt_LEFT.push(...data);
+  }
+
+  clearLeftDonutData() {
+    this.cnt_LEFT = new Array<DonutData>();
   }
 
   /**
@@ -95,6 +81,25 @@ export class DonutStatisticsStore {
 
   addRightDonutData(data: DonutData[]) {
     this.cnt_RIGHT.push(...data);
+  }
+
+  clearRightDonutData() {
+    this.cnt_RIGHT = new Array<DonutData>();
+  }
+
+  reloadDonutData() {
+    this.clearLeftDonutData();
+    this.clearRightDonutData();
+    // 왼쪽 도넛 차트 데이터 조회
+    getLeftDonutData(this.sampleId).then(data => {
+      if (!data) return;
+      this.addLeftDonutData(data);
+    });
+    // 오른쪽 도넛 차트 데이터 조회
+    getRightDonutData(this.sampleId).then(data => {
+      if (!data) return;
+      this.addRightDonutData(data);
+    });
   }
 
 }

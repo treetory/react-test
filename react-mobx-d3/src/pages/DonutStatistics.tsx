@@ -8,12 +8,22 @@ const HrdStatistics: React.FC = observer((props) => {
   
   // store 사용을 위해 rootStore 로부터 얻어오기
   const store = useContext(MobXContext).donutStatisticsStore;
-  // router 에서 전달된 parameter 추출
+  
   const { pathname } = useLocation();           // location 에 지정된 URL 을 읽을 때
   const { sampleId } = useParams();             // URL path 에 지정된 파라미터를 읽을 때
   const [ searchParams ] = useSearchParams();   // URL query string 을 읽을 때
-  console.warn(pathname, searchParams.toString(), sampleId);
-  store.setParam(2403, 'a');
+  
+  /**
+   *  React Router V6 에서는 
+   *    - URL location 은 useLocation() hook 으로
+   *    - path parameter 은 useParams() hook 으로
+   *    - URL query string 은 useSearchParams() hook 으로
+   *  받는다.
+   * 
+   *  V5 는 props 로 전달이 가능했으나 V6 는 금지되었다.
+   */
+  const params = Object.fromEntries(searchParams.entries());
+  store.setParam(Number.parseInt(sampleId!), params['type']);
   
   const chartContainerStyle = {
     display: 'inline-flex',
@@ -22,9 +32,9 @@ const HrdStatistics: React.FC = observer((props) => {
     marginTop: '10px',
   } as React.CSSProperties;
 
-  const chartDiv = {
+  const chartDivStyle = {
     display:'flex',
-    width: '400px',
+    //width: '400px',
     alignItems: 'end',
   } as React.CSSProperties;
   
@@ -39,27 +49,37 @@ const HrdStatistics: React.FC = observer((props) => {
     7: "#5a64a5",
   };
 
+  const buttonDivStyle = {
+    display: 'flex',
+    flexFlow: 'inherit',
+    justifyContent: 'end',
+    margin: '10px',
+  } as React.CSSProperties;
+
   if (
     store.getLeftDonutData().length > 0 && 
     store.getRightDonutData().length > 0
     ) {
     return (
-      <div style={chartContainerStyle} id={"hrdStatistics"}>
-        <div style={chartDiv}>
-            <DonutChartWithLabel 
-              data={store.getDonutData('LEFT')} 
-              type={store.type} 
-              donutType={'LEFT'} 
-              colors={colors} />
+      <>
+        <div style={buttonDivStyle}>
+          <button onClick={() => store.reloadDonutData()}>REFRESH</button>
         </div>
-        <div style={chartDiv}>
-            <DonutChartWithLabel 
-              data={store.getDonutData('cnt_TIER_PATHOGENICITY')} 
-              type={store.type} 
-              donutType={'cnt_TIER_PATHOGENICITY'} 
-              colors={colors} />
+        <div style={chartContainerStyle} id={"statistics"}>
+          <div style={chartDivStyle}>
+              <DonutChartWithLabel 
+                data={store.cnt_LEFT} 
+                type={store.type}  
+                colors={colors} />
+          </div>
+          <div style={chartDivStyle}>
+              <DonutChartWithLabel 
+                data={store.cnt_RIGHT} 
+                type={store.type} 
+                colors={colors} />
+          </div>
         </div>
-      </div>
+      </>
     );
   }
   return (

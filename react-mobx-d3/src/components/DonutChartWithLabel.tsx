@@ -36,7 +36,6 @@ const LegendDiv = styled.div`
 export interface IDonutChartProps {
   data: DonutData[];
   type: string;
-  donutType: string;
   colors: any;
 }
 
