@@ -1,3 +1,6 @@
+import MobXContext from "../src/store/mobXContext";
+import MobXStore from "../src/store/mobxStore";
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -7,3 +10,11 @@ export const parameters = {
     },
   },
 }
+
+export const decorators = [
+  (Story) => (
+    <MobXContext.Provider value={new MobXStore()}>
+      <Story/>
+    </MobXContext.Provider>
+  )
+]

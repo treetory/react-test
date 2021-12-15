@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import './index.css';
-import App from './App';
+// import App from './App';
 import reportWebVitals from './reportWebVitals';
 import DonutStatistics from './pages/DonutStatistics';
+import MobXContext from './store/mobXContext';
+import MobXStore from './store/mobxStore';
 
 /**
  * 
@@ -24,17 +26,19 @@ import DonutStatistics from './pages/DonutStatistics';
  */
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}/>
-        <Route path="/donutStatistics/:sampleId" element={<DonutStatistics />}/>
-      </Routes>
-    </BrowserRouter>
-    <HashRouter>
-      <Routes>
-        <Route path="/hashDonutStatistics/:sampleId" element={<DonutStatistics />}/>
-      </Routes>
-    </HashRouter>
+    <MobXContext.Provider value={new MobXStore()}>
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<App />}/> */}
+          <Route path="/donutStatistics/:sampleId" element={<DonutStatistics />}/>
+        </Routes>
+      </BrowserRouter>
+      <HashRouter>
+        <Routes>
+          <Route path="/hashDonutStatistics/:sampleId" element={<DonutStatistics />}/>
+        </Routes>
+      </HashRouter>
+    </MobXContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

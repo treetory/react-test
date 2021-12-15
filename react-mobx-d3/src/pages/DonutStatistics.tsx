@@ -4,7 +4,7 @@ import MobXContext from "../store/mobXContext";
 import DonutChartWithLabel from "../components/DonutChartWithLabel";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 
-const HrdStatistics: React.FC = observer((props) => {
+const HrdStatistics = observer((props) => {
   
   // store 사용을 위해 rootStore 로부터 얻어오기
   const store = useContext(MobXContext).donutStatisticsStore;
@@ -69,13 +69,11 @@ const HrdStatistics: React.FC = observer((props) => {
           <div style={chartDivStyle}>
               <DonutChartWithLabel 
                 data={store.cnt_LEFT} 
-                type={store.type}  
                 colors={colors} />
           </div>
           <div style={chartDivStyle}>
               <DonutChartWithLabel 
                 data={store.cnt_RIGHT} 
-                type={store.type} 
                 colors={colors} />
           </div>
         </div>

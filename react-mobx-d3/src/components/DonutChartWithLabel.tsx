@@ -35,7 +35,6 @@ const LegendDiv = styled.div`
 
 export interface IDonutChartProps {
   data: DonutData[];
-  type: string;
   colors: any;
 }
 
@@ -69,10 +68,22 @@ const DonutChartWithLabel = observer((props: IDonutChartProps) => {
     return d3.arc().innerRadius(innerRadius).outerRadius(radius);
   }
 
-  useEffect(() => {
+  // to minify the label as a abbreviation
+  const getLabel = (label: string) => {
+    return label;
+  }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getColor = (index: number) => {
+    return colors[index] === undefined ? "#979797" : colors[index];
+  }
+
+  // let svgElement: SVGElement | null = null;
+
+  useEffect(() => {
+    
     // append the svg object to the SVGSVGElement
-    const svg = d3.select(svgRef.current);
+    const svg = d3.select(/*svgElement*/svgRef.current);
 
     const arc: any = d3.arc()
       .innerRadius(innerRadius)
@@ -94,7 +105,7 @@ const DonutChartWithLabel = observer((props: IDonutChartProps) => {
       .data(pie(data))
       .join("path")
         .attr('fill', (d: any) => {
-          return colors[d.index];
+          return getColor(d.index);
         })
         .attr('d', arc)
         .attr("stroke", "white")
@@ -142,12 +153,7 @@ const DonutChartWithLabel = observer((props: IDonutChartProps) => {
       .attr("fill", 'black')
     .transition()
 
-  }, [arcLabel, radius, data, colors])
-
-  // to minify the label as a abbreviation
-  const getLabel = (label: string) => {
-      return label;
-  }
+  }, [arcLabel, radius, data, getColor])
 
   return (
     <>
@@ -160,7 +166,7 @@ const DonutChartWithLabel = observer((props: IDonutChartProps) => {
           preserveAspectRatio="xMinYMin"
         >
           <g
-            ref={svgRef}
+            ref={svgRef/* => svgElement = svgRef*/}
             transform={`translate(${graphWidth/2}, ${graphHeight/2})`}
           />
         </Donut>
@@ -173,7 +179,7 @@ const DonutChartWithLabel = observer((props: IDonutChartProps) => {
               y={index * 20}
               width={20}
               height={15}
-              fill={colors[index]}
+              fill={getColor(index)}
             />
             <text
               x={35}
@@ -181,7 +187,7 @@ const DonutChartWithLabel = observer((props: IDonutChartProps) => {
               fill='black'
               textAnchor='left'
             >
-              {`${getLabel(label)}`}
+              {getLabel(label)}
             </text>
           </g>
         )}
