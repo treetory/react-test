@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import DonutChart from "./DonutChart";
+import DonutChart from "../components/DonutChart";
 
 export default {
   title: "D3/DonutChart",

@@ -56,34 +56,25 @@ const HrdStatistics = observer((props) => {
     margin: '10px',
   } as React.CSSProperties;
 
-  if (
-    store.getLeftDonutData().length > 0 && 
-    store.getRightDonutData().length > 0
-    ) {
-    return (
-      <>
-        <div style={buttonDivStyle}>
-          <button onClick={() => store.reloadDonutData()}>REFRESH</button>
-        </div>
-        <div style={chartContainerStyle} id={"statistics"}>
-          <div style={chartDivStyle}>
-              <DonutChartWithLabel 
-                data={store.cnt_LEFT} 
-                colors={colors} />
-          </div>
-          <div style={chartDivStyle}>
-              <DonutChartWithLabel 
-                data={store.cnt_RIGHT} 
-                colors={colors} />
-          </div>
-        </div>
-      </>
-    );
-  }
   return (
-    <div style={chartContainerStyle}>
-      <h1>Nothing</h1>
-    </div>
+    <>
+      <div style={buttonDivStyle}>
+        <button onClick={() => store.reloadDonutData()}>REFRESH</button>
+      </div>
+      <div style={chartContainerStyle} id={"statistics"}>
+        <div style={chartDivStyle}>
+            <DonutChartWithLabel 
+              data={store.cnt_LEFT} 
+              colors={colors} />
+        </div>
+        <div style={chartDivStyle}>
+            <DonutChartWithLabel 
+              data={store.cnt_RIGHT} 
+              colors={colors} />
+        </div>
+      </div>
+    </>
   );
 });
+
 export default HrdStatistics;
